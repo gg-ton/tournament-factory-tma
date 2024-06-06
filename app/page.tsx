@@ -3,7 +3,7 @@
 import styles from "./page.module.css";
 import {TonConnectButton, useIsConnectionRestored, useTonConnectUI, useTonWallet} from "@tonconnect/ui-react";
 import {useEffect} from "react";
-import {useRouter} from "next/router";
+import {useRouter} from "next/navigation";
 
 export default function Home() {
     const [tonConnectUI, setOptions] = useTonConnectUI();
