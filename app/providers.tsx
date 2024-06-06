@@ -9,8 +9,7 @@ import { SDKProvider } from '@tma.js/sdk-react';
 
 const queryClient = new QueryClient();
 const appRootUrl = process.env.NEXT_PUBLIC_APP_ROOT;
-// const manifestUrl = process.env.NEXT_PUBLIC_TONCONNECT_MANIFEST_URL;
-const manifestUrl = '$APP_ROOT/ton/tonconnect-manifest.json';
+const manifestUrl = process.env.NEXT_PUBLIC_TONCONNECT_MANIFEST_URL;
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
