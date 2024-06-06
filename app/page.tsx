@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import TonConnect from '../components/TonConnect';
+import {WalletAddress} from "@/components/WalletAddress";
 
 export default function Home() {
   return (
@@ -42,6 +43,9 @@ export default function Home() {
 
       <div className={styles.center}>
         <TonConnect />
+      </div>
+      <div className={styles.center}>
+        <WalletAddress />
       </div>
 
       <div className={styles.grid}>
