@@ -1,0 +1,6 @@
+.topRightCorner {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 20px;
+}

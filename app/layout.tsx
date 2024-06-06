@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import ClientLayout from './components/ThemeProvider';
 import { Providers } from '@/app/providers';
-import TonConnectWrapper from "@/components/TonConnectWrapper";
+import TonConnectWrapper from '@/components/TonConnectWrapper';
 
 export const metadata = {
   title: 'gg.ton',
@@ -24,8 +24,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         <Providers>
           <ClientLayout>
-              <TonConnectWrapper/>
-              {children}
+            <TonConnectWrapper />
+            {children}
           </ClientLayout>
         </Providers>
       </body>
