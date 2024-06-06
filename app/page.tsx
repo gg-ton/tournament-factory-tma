@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import TonConnect from '../components/TonConnect';
 
 export default function Home() {
   return (
@@ -37,6 +38,10 @@ export default function Home() {
           height={37}
           priority
         />
+      </div>
+
+      <div className={styles.center}>
+        <TonConnect />
       </div>
 
       <div className={styles.grid}>
