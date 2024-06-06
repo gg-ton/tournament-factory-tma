@@ -8,8 +8,8 @@ export const WalletAddress = () => {
     return (
         userFriendlyAddress && (
             <div>
-                <span>User-friendly address: {userFriendlyAddress}</span>
-                <span>Raw address: {rawAddress}</span>
+                <p>User-friendly address: {userFriendlyAddress}</p>
+                <p>Raw address: {rawAddress}</p>
             </div>
         )
     );
