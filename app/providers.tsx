@@ -8,7 +8,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { SDKProvider } from "@tma.js/sdk-react";
 
 const queryClient = new QueryClient();
-const manifestUrl = "/tonconnect-manifest.json";
+const manifestUrl = process.env.TONCONNECT_MANIFEST_URL;
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (
