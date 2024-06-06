@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px;
+  font-family: 'SF Pro', sans-serif;
+  position: relative;
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  padding-bottom: 140px;
+}
+
+.tournament {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tournament h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+  font-family: 'SF Pro', sans-serif;
+}
+
+.tournament p {
+  margin: 0 0 10px 0;
+  color: #666;
+  font-family: 'SF Pro', sans-serif;
+}
+
+.tournament ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tournament li {
+  margin: 10px 0;
+  font-family: 'SF Pro', sans-serif;
+}
+
+.button {
+  padding: 15px;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 590;
+  text-align: center;
+  width: calc(100% - 40px);
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+}

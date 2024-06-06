@@ -1,24 +1,33 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import {Providers} from "@/app/providers";
+import { ReactNode } from 'react';
+import ClientLayout from './components/ThemeProvider';
+import { Providers } from '@/app/providers';
+import TonConnectWrapper from "@/components/TonConnectWrapper";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "gg.ton",
-  description: "TMA.js SDK + TON Connect UI",
+export const metadata = {
+  title: 'gg.ton',
+  description: 'TMA.js SDK + TON Connect UI',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+type RootLayoutProps = {
+  children: ReactNode;
+};
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
+      <body>
+        <Providers>
+          <ClientLayout>
+              <TonConnectWrapper/>
+              {children}
+          </ClientLayout>
+        </Providers>
       </body>
     </html>
   );

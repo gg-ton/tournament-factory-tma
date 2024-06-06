@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 20px;
+  font-family: 'SF Pro', sans-serif;
+  position: relative;
+}
+
+.content {
+  text-align: left;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 140px;
+}
+
+.subtitle {
+  font-size: 2rem;
+  font-weight: 590;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+.input,
+.select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: 400;
+  width: 100%;
+}
+
+.input:focus,
+.select:focus {
+  border-color: #007aff;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin-top: 5px;
+}
+
+.button {
+  padding: 15px;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 590;
+  text-align: center;
+  width: calc(100% - 40px);
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+}
