@@ -20,6 +20,30 @@ export interface Tournament {
     name: string;
 }
 
+export const listTournaments = cache(async (): Promise<Tournament[]> => {
+    const builder = new MongoBuilder();
+    const mongoPromise = builder.getInstance();
+
+    const client = await mongoPromise;
+
+    const tournaments = await client
+        .db()
+        .collection(collectionName)
+        .find()
+        .toArray();
+
+    let result: Tournament[] = [];
+    tournaments.forEach(doc => {
+        console.log("tournament", doc);
+        result.push({
+            address: doc.address,
+            name: doc.name,
+        });
+    })
+
+    return Promise.resolve(result)
+});
+
 export const getTournament = cache(async (address: string): Promise<Tournament> => {
     const builder = new MongoBuilder();
     const mongoPromise = builder.getInstance();
