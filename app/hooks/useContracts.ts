@@ -11,12 +11,12 @@ import {JoinTournamentRequest, Tournament} from '../wrappers/Tournament';
 import {Team} from '../wrappers/Team';
 import {Player} from '../wrappers/Player';
 
-export type createTeamRequest = {
+export type CreateTeamRequest = {
     owner: Address;
     participants: Address[];
 }
 
-export function useTeamContract(request: createTeamRequest) {
+export function useTeamContract(request: CreateTeamRequest) {
     const client = useTonClient();
     const { sender } = useTonConnect();
     const [totalParticipants, setTotalParticipants] = useState<null | number>(null)
