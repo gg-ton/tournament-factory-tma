@@ -1,0 +1,163 @@
+;;
+;; Header files for Team
+;; NOTE: declarations are sorted for optimal order
+;;
+
+;; __tact_verify_address
+slice __tact_verify_address(slice address) inline;
+
+;; __tact_load_address
+(slice, slice) __tact_load_address(slice cs) inline;
+
+;; __tact_store_address
+builder __tact_store_address(builder b, slice address) inline;
+
+;; __tact_create_address
+slice __tact_create_address(int chain, int hash) inline;
+
+;; __tact_compute_contract_address
+slice __tact_compute_contract_address(int chain, cell code, cell data) inline;
+
+;; __tact_my_balance
+int __tact_my_balance() inline;
+
+;; __tact_not_null
+forall X -> X __tact_not_null(X x) inline;
+
+;; __tact_context_get
+(int, slice, int, slice) __tact_context_get() inline;
+
+;; __tact_context_get_sender
+slice __tact_context_get_sender() inline;
+
+;; __tact_store_bool
+builder __tact_store_bool(builder b, int v) inline;
+
+;; __tact_dict_set_slice_int
+(cell, ()) __tact_dict_set_slice_int(cell d, int kl, slice k, int v, int vl) inline;
+
+;; __tact_dict_get_slice_int
+int __tact_dict_get_slice_int(cell d, int kl, slice k, int vl) inline;
+
+;; __tact_int_eq_nullable_one
+int __tact_int_eq_nullable_one(int a, int b) inline;
+
+;; __tact_dict_set_code
+cell __tact_dict_set_code(cell dict, int id, cell code) inline;
+
+;; __tact_dict_get_code
+cell __tact_dict_get_code(cell dict, int id) inline;
+
+;; $Deploy$_load
+(slice, ((int))) $Deploy$_load(slice sc_0) inline;
+
+;; $DeployOk$_store
+builder $DeployOk$_store(builder build_0, (int) v) inline;
+
+;; $DeployOk$_store_cell
+cell $DeployOk$_store_cell((int) v) inline;
+
+;; $SetTeamRequest$_store
+builder $SetTeamRequest$_store(builder build_0, (slice) v) inline;
+
+;; $SetTeamRequest$_store_cell
+cell $SetTeamRequest$_store_cell((slice) v) inline;
+
+;; $TeamInfo$_store
+builder $TeamInfo$_store(builder build_0, (slice, slice, int) v) inline;
+
+;; $TeamInfo$_load
+(slice, ((slice, slice, int))) $TeamInfo$_load(slice sc_0) inline;
+
+;; $VictoryRequest$_load
+(slice, ((slice))) $VictoryRequest$_load(slice sc_0) inline;
+
+;; $VictoryResponse$_store
+builder $VictoryResponse$_store(builder build_0, ((slice, slice, int)) v) inline;
+
+;; $VictoryResponse$_store_cell
+cell $VictoryResponse$_store_cell(((slice, slice, int)) v) inline;
+
+;; $AddTeamParticipantRequest$_load
+(slice, ((slice))) $AddTeamParticipantRequest$_load(slice sc_0) inline;
+
+;; $Team$_store
+builder $Team$_store(builder build_0, (int, slice, slice, int, cell, int) v) inline;
+
+;; $Team$_load
+(slice, ((int, slice, slice, int, cell, int))) $Team$_load(slice sc_0) inline;
+
+;; $StateInit$_not_null
+((cell, cell)) $StateInit$_not_null(tuple v) inline;
+
+;; $Player$init$_store
+builder $Player$init$_store(builder build_0, (slice) v) inline;
+
+;; $Team$init$_store
+builder $Team$init$_store(builder build_0, ((slice, slice, int)) v) inline;
+
+;; $Team$init$_load
+(slice, (((slice, slice, int)))) $Team$init$_load(slice sc_0) inline;
+
+;; $Team$_contract_init
+(int, slice, slice, int, cell, int) $Team$_contract_init((slice, slice, int) $teamInfo) impure inline_ref;
+
+;; $Team$_contract_load
+(int, slice, slice, int, cell, int) $Team$_contract_load() impure inline_ref;
+
+;; $Team$_contract_store
+() $Team$_contract_store((int, slice, slice, int, cell, int) v) impure inline;
+
+;; $global_contractAddress
+slice $global_contractAddress((cell, cell) $s) impure inline;
+
+;; $global_send
+() $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref;
+
+;; $Player$_init_child
+(cell, cell) $Player$_init_child(cell sys', slice $owner) inline_ref;
+
+;; $SendParameters$_constructor_bounce_to_value_mode_body_code_data
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
+
+;; $Team$_init_child
+(cell, cell) $Team$_init_child(cell sys', (slice, slice, int) $teamInfo) inline_ref;
+
+;; $Team$_fun_participants
+((int, slice, slice, int, cell, int), cell) $Team$_fun_participants((int, slice, slice, int, cell, int) $self) impure inline_ref;
+
+;; $Team$_fun_participantCount
+((int, slice, slice, int, cell, int), int) $Team$_fun_participantCount((int, slice, slice, int, cell, int) $self) impure inline_ref;
+
+;; $Team$_fun_seqno
+((int, slice, slice, int, cell, int), int) $Team$_fun_seqno((int, slice, slice, int, cell, int) $self) impure inline_ref;
+
+;; $Team$_fun_name
+((int, slice, slice, int, cell, int), slice) $Team$_fun_name((int, slice, slice, int, cell, int) $self) impure inline_ref;
+
+;; $Team$_fun_victoryCount
+((int, slice, slice, int, cell, int), int) $Team$_fun_victoryCount((int, slice, slice, int, cell, int) $self) impure inline_ref;
+
+;; $Team$_fun_forward
+((int, slice, slice, int, cell, int), ()) $Team$_fun_forward((int, slice, slice, int, cell, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
+
+;; $Team$_fun_reply
+((int, slice, slice, int, cell, int), ()) $Team$_fun_reply((int, slice, slice, int, cell, int) $self, cell $body) impure inline;
+
+;; $Team$_fun_notify
+((int, slice, slice, int, cell, int), ()) $Team$_fun_notify((int, slice, slice, int, cell, int) $self, cell $body) impure inline;
+
+;; $TeamInfo$_constructor_name_owner_seqno
+((slice, slice, int)) $TeamInfo$_constructor_name_owner_seqno(slice name, slice owner, int seqno) inline;
+
+;; $SendParameters$_constructor_to_body_value_code_data
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_code_data(slice to, cell body, int value, cell code, cell data) inline;
+
+;; $SetTeamRequest$_constructor_team
+((slice)) $SetTeamRequest$_constructor_team(slice team) inline;
+
+;; $VictoryResponse$_constructor_teamInfo
+(((slice, slice, int))) $VictoryResponse$_constructor_teamInfo((slice, slice, int) teamInfo) inline;
+
+;; $DeployOk$_constructor_queryId
+((int)) $DeployOk$_constructor_queryId(int queryId) inline;

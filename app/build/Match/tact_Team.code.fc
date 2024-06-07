@@ -1,0 +1,147 @@
+#pragma version =0.4.4;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "tact_Team.headers.fc";
+#include "tact_Team.stdlib.fc";
+#include "tact_Team.storage.fc";
+
+;;
+;; Contract Team functions
+;;
+
+(int, slice, slice, int, cell, int, int) $Team$_contract_init((slice, slice, int, int) $teamInfo) impure inline_ref {
+    var (($teamInfo'name, $teamInfo'owner, $teamInfo'seqno, $teamInfo'maxParticipantCount)) = $teamInfo;
+    var (($self'seqno, $self'owner, $self'name, $self'victoryCount, $self'participants, $self'participantCount, $self'maxParticipantCount)) = (null(), null(), null(), null(), null(), null(), null());
+    $self'seqno = $teamInfo'seqno;
+    $self'owner = $teamInfo'owner;
+    $self'name = $teamInfo'name;
+    $self'maxParticipantCount = $teamInfo'maxParticipantCount;
+    $self'victoryCount = 0;
+    $self'participants = null();
+    $self'participantCount = 0;
+    return ($self'seqno, $self'owner, $self'name, $self'victoryCount, $self'participants, $self'participantCount, $self'maxParticipantCount);
+}
+
+;;
+;; Receivers of a Contract Team
+;;
+
+(((int, slice, slice, int, cell, int, int)), ()) $Team$_internal_binary_AddTeamParticipantRequest((int, slice, slice, int, cell, int, int) $self, (slice) $msg) impure inline {
+    var ($self'seqno, $self'owner, $self'name, $self'victoryCount, $self'participants, $self'participantCount, $self'maxParticipantCount) = $self;
+    var ($msg'player) = $msg;
+    var ($initPlayer'code, $initPlayer'data) = $Player$_init_child(__tact_context_sys, $msg'player);
+    int $isParticipantActive = __tact_dict_get_slice_int($self'participants, 267, $global_contractAddress(($initPlayer'code, $initPlayer'data)), 1);
+    if (( (null?($isParticipantActive)) ? (true) : (__tact_int_eq_nullable_one($isParticipantActive, false)) )) {
+        $self'participants~__tact_dict_set_slice_int(267, $global_contractAddress(($initPlayer'code, $initPlayer'data)), true, 1);
+        $self'participantCount = $self'participantCount + 1;
+    }
+    var ($initTeam'code, $initTeam'data) = $Team$_init_child(__tact_context_sys, $TeamInfo$_constructor_name_owner_seqno_maxParticipantCount($self'name, $self'owner, $self'seqno, $self'maxParticipantCount));
+    $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($initPlayer'code, $initPlayer'data)), $SetTeamRequest$_store_cell($SetTeamRequest$_constructor_team($global_contractAddress(($initTeam'code, $initTeam'data)))), 100000000, $initPlayer'code, $initPlayer'data));
+    return (($self'seqno, $self'owner, $self'name, $self'victoryCount, $self'participants, $self'participantCount, $self'maxParticipantCount), ());
+}
+
+(((int, slice, slice, int, cell, int, int)), ()) $Team$_internal_binary_VictoryRequest((int, slice, slice, int, cell, int, int) $self, (slice) $msg) impure inline {
+    var ($self'seqno, $self'owner, $self'name, $self'victoryCount, $self'participants, $self'participantCount, $self'maxParticipantCount) = $self;
+    var ($msg'player) = $msg;
+    var ($init'code, $init'data) = $Player$_init_child(__tact_context_sys, $msg'player);
+    int $isParticipantActive = __tact_dict_get_slice_int($self'participants, 267, $global_contractAddress(($init'code, $init'data)), 1);
+    if (( (null?($isParticipantActive)) ? (true) : (__tact_int_eq_nullable_one($isParticipantActive, false)) )) {
+        $self'victoryCount = $self'victoryCount + 1;
+    }
+    ($self'seqno, $self'owner, $self'name, $self'victoryCount, $self'participants, $self'participantCount, $self'maxParticipantCount)~$Team$_fun_reply($VictoryResponse$_store_cell($VictoryResponse$_constructor_teamInfo($TeamInfo$_constructor_name_owner_seqno_maxParticipantCount($self'name, $self'owner, $self'seqno, $self'maxParticipantCount))));
+    return (($self'seqno, $self'owner, $self'name, $self'victoryCount, $self'participants, $self'participantCount, $self'maxParticipantCount), ());
+}
+
+(((int, slice, slice, int, cell, int, int)), ()) $Team$_internal_binary_Deploy((int, slice, slice, int, cell, int, int) $self, (int) $deploy) impure inline {
+    var ($self'seqno, $self'owner, $self'name, $self'victoryCount, $self'participants, $self'participantCount, $self'maxParticipantCount) = $self;
+    var ($deploy'queryId) = $deploy;
+    ($self'seqno, $self'owner, $self'name, $self'victoryCount, $self'participants, $self'participantCount, $self'maxParticipantCount)~$Team$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'seqno, $self'owner, $self'name, $self'victoryCount, $self'participants, $self'participantCount, $self'maxParticipantCount), ());
+}
+
+;;
+;; Get methods of a Contract Team
+;;
+
+_ supported_interfaces() method_id {
+    return (
+        "org.ton.introspection.v0"H >> 128,
+        "org.ton.abi.ipfs.v0"H >> 128,
+        "org.ton.deploy.lazy.v0"H >> 128,
+        "org.ton.debug.v0"H >> 128,
+        "org.ton.chain.workchain.v0"H >> 128
+    );
+}
+
+_ get_abi_ipfs() method_id {
+    return "ipfs://QmRc1rajPwVEYo2HhJTkwixL8V16eL9C3yyLH5kQcmyM5K";
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract Team
+;;
+
+((int, slice, slice, int, cell, int, int), int) $Team$_contract_router_internal((int, slice, slice, int, cell, int, int) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive AddTeamParticipantRequest message
+    if (op == 2048823914) {
+        var msg = in_msg~$AddTeamParticipantRequest$_load();
+        self~$Team$_internal_binary_AddTeamParticipantRequest(msg);
+        return (self, true);
+    }
+    
+    ;; Receive VictoryRequest message
+    if (op == 3356721572) {
+        var msg = in_msg~$VictoryRequest$_load();
+        self~$Team$_internal_binary_VictoryRequest(msg);
+        return (self, true);
+    }
+    
+    ;; Receive Deploy message
+    if (op == 2490013878) {
+        var msg = in_msg~$Deploy$_load();
+        self~$Team$_internal_binary_Deploy(msg);
+        return (self, true);
+    }
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $Team$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$Team$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $Team$_contract_store(self);
+}
