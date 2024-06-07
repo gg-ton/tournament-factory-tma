@@ -68,11 +68,11 @@ const CreateTournament = () => {
           </div>
 
           <div className={styles.field}>
-            <label className={styles.label}>Game name</label>
+            <label className={styles.label}>Description</label>
             <input
               className={styles.input}
-              {...register('gameName', { required: 'Game name is required' })}
-              placeholder="Dota 2"
+              {...register('gameName', { required: 'Description is required' })}
+              placeholder="My Awesome Cup 2222"
             />
             {errors.gameName && (
               <p className={styles.error}>{errors.gameName.message}</p>

@@ -15,10 +15,10 @@ const TournamentDetails: React.FC = () => {
   >('preparing');
   const [showModal, setShowModal] = useState(false);
   const [participants] = useState<Participant[]>([
-    { id: 1, name: 'Participant 1' },
-    { id: 2, name: 'Participant 2' },
-    { id: 3, name: 'Participant 3' },
-    { id: 4, name: 'Participant 4' },
+    { id: 1, name: 'meme' },
+    { id: 2, name: 'froge' },
+    // { id: 3, name: 'Participant 3' },
+    // { id: 4, name: 'Participant 4' },
   ]);
 
   const router = useRouter();
@@ -42,9 +42,9 @@ const TournamentDetails: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <h2 className={styles.title}>Tournament ABC</h2>
+        <h2 className={styles.title}>Meme Battle</h2>
         <p className={styles.description}>
-          Some description about the tournament.
+          Who&apos;s the best?
         </p>
 
         <div className={`${styles.status} ${styles[status]}`}>

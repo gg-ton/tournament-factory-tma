@@ -49,14 +49,14 @@ const RegisterTeam: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <h2 className={styles.subtitle}>REGISTER TEAM</h2>
+        <h2 className={styles.subtitle}>Register team</h2>
         <form
           className={styles.form}
           id="register-team-form"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className={styles.field}>
-            <label className={styles.label}>TEAM NAME</label>
+            <label className={styles.label}>Team name</label>
             <input
               className={styles.input}
               {...register('teamName', { required: 'Team name is required' })}
@@ -67,11 +67,11 @@ const RegisterTeam: React.FC = () => {
           </div>
 
           <div className={styles.field}>
-            <label className={styles.label}>NUMBER OF PARTICIPANTS</label>
+            <label className={styles.label}>Participants count</label>
             <select
               className={styles.select}
               {...register('memberCount', {
-                required: 'Number of participants is required',
+                required: 'Participants count is required',
               })}
             >
               {[2, 3, 4].map(num => (
@@ -88,7 +88,7 @@ const RegisterTeam: React.FC = () => {
           {fields.map((field, index) => (
             <div className={styles.field} key={field.id}>
               <label className={styles.label}>
-                PARTICIPANT {index + 1} NAME
+                Participant {index + 1}
               </label>
               <input
                 className={styles.input}
