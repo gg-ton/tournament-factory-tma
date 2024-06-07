@@ -34,7 +34,7 @@ export function useTeamContract(request: createTeamRequest) {
             value: toNano("0.25"), bounce: false
         }, {
             $$type: "Deploy",
-            queryId: 0n,
+            queryId: BigInt(0),
         })
     }
 
@@ -44,7 +44,7 @@ export function useTeamContract(request: createTeamRequest) {
         setTotalParticipants(null);
 
         let participantCount = 0;
-        for (const p in request.participants) {
+        request.participants.map(async (p, idx) => {
             await teamContract.send(sender, {
                 value: toNano("0.25")
             }, {
@@ -52,8 +52,8 @@ export function useTeamContract(request: createTeamRequest) {
                 player: p,
             })
 
-            participantCount++;
-        }
+            participantCount = idx;
+        })
 
         setTotalParticipants(participantCount);
     }
@@ -82,7 +82,7 @@ export function usePlayerContract(request: createPlayerRequest) {
         if (!client) return;
         const contract = Player.fromAddress(request.owner);
 
-        return client.open(contract) as OpenedContract<Team>;
+        return client.open(contract) as OpenedContract<Player>;
     }, [client]);
 
     async function deploy() {
@@ -91,7 +91,7 @@ export function usePlayerContract(request: createPlayerRequest) {
             value: toNano("0.25"), bounce: false
         }, {
             $$type: "Deploy",
-            queryId: 0n,
+            queryId: BigInt(0),
         })
     }
 
@@ -130,7 +130,7 @@ export function useTournamentContract(request: createTournamentRequest) {
             value: toNano("0.25"), bounce: false
         }, {
             $$type: "Deploy",
-            queryId: 0n,
+            queryId: BigInt(0),
         })
     }
 
@@ -156,15 +156,15 @@ export function useTournamentContract(request: createTournamentRequest) {
         setTotalParticipants(null);
 
         let participantCount = 0;
-        for (const p in request.participants) {
-            await tournamentContract.send(p, {
+        request.participants.map(async (s, idx) => {
+            await tournamentContract.send(s, {
                 value: toNano("0.25")
             }, {
                 $$type: 'JoinTournamentRequest',
             })
 
-            participantCount++
-        }
+            participantCount = idx;
+        })
 
         setTotalParticipants(participantCount);
     }
