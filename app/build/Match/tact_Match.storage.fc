@@ -1,0 +1,120 @@
+;;
+;; Type: StateInit
+;; TLB: _ code:^cell data:^cell = StateInit
+;;
+
+((cell, cell)) $StateInit$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (cell vvv'code, cell vvv'data) = __tact_tuple_destroy_2(v);
+    return (vvv'code, vvv'data);
+}
+
+;;
+;; Type: SendParameters
+;; TLB: _ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters
+;;
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline {
+    return (bounce, to, value, mode, body, code, data);
+}
+
+;;
+;; Type: Deploy
+;; Header: 0x946a98b6
+;; TLB: deploy#946a98b6 queryId:uint64 = Deploy
+;;
+
+(slice, ((int))) $Deploy$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2490013878);
+    var v'queryId = sc_0~load_uint(64);
+    return (sc_0, (v'queryId));
+}
+
+;;
+;; Type: DeployOk
+;; Header: 0xaff90f57
+;; TLB: deploy_ok#aff90f57 queryId:uint64 = DeployOk
+;;
+
+builder $DeployOk$_store(builder build_0, (int) v) inline {
+    var (v'queryId) = v;
+    build_0 = store_uint(build_0, 2952335191, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    return build_0;
+}
+
+cell $DeployOk$_store_cell((int) v) inline {
+    return $DeployOk$_store(begin_cell(), v).end_cell();
+}
+
+((int)) $DeployOk$_constructor_queryId(int queryId) inline {
+    return (queryId);
+}
+
+;;
+;; Type: GameInfo
+;; TLB: _ name:^string genre:^string = GameInfo
+;;
+
+builder $GameInfo$_store(builder build_0, (slice, slice) v) inline {
+    var (v'name, v'genre) = v;
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'name).end_cell());
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'genre).end_cell());
+    return build_0;
+}
+
+(slice, ((slice, slice))) $GameInfo$_load(slice sc_0) inline {
+    var v'name = sc_0~load_ref().begin_parse();
+    var v'genre = sc_0~load_ref().begin_parse();
+    return (sc_0, (v'name, v'genre));
+}
+
+((slice, slice)) $GameInfo$_constructor_name_genre(slice name, slice genre) inline {
+    return (name, genre);
+}
+
+;;
+;; Type: Match
+;;
+
+builder $Match$_store(builder build_0, (int, (slice, slice)) v) inline {
+    var (v'tournamentSeqno, (v'gameInfo'name, v'gameInfo'genre)) = v;
+    build_0 = build_0.store_uint(v'tournamentSeqno, 64);
+    build_0 = $GameInfo$_store(build_0, (v'gameInfo'name, v'gameInfo'genre));
+    return build_0;
+}
+
+(slice, ((int, (slice, slice)))) $Match$_load(slice sc_0) inline {
+    var v'tournamentSeqno = sc_0~load_uint(64);
+    var v'gameInfo = sc_0~$GameInfo$_load();
+    return (sc_0, (v'tournamentSeqno, v'gameInfo));
+}
+
+(slice, ((int, (slice, slice)))) $Match$init$_load(slice sc_0) inline {
+    var v'tournamentSeqno = sc_0~load_int(257);
+    var v'gameInfo = sc_0~$GameInfo$_load();
+    return (sc_0, (v'tournamentSeqno, v'gameInfo));
+}
+
+(int, (slice, slice)) $Match$_contract_load() impure inline_ref {
+    slice $sc = get_data().begin_parse();
+    __tact_context_sys = $sc~load_ref();
+    int $loaded = $sc~load_int(1);
+    if ($loaded) {
+        return $sc~$Match$_load();
+    } else {
+        ;; Allow only workchain deployments
+        throw_unless(137, my_address().preload_uint(11) == 1024);
+        (int tournamentSeqno, (slice, slice) gameInfo) = $sc~$Match$init$_load();
+        $sc.end_parse();
+        return $Match$_contract_init(tournamentSeqno, gameInfo);
+    }
+}
+
+() $Match$_contract_store((int, (slice, slice)) v) impure inline {
+    builder b = begin_cell();
+    b = b.store_ref(__tact_context_sys);
+    b = b.store_int(true, 1);
+    b = $Match$_store(b, v);
+    set_data(b.end_cell());
+}

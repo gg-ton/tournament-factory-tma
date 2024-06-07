@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import {useTournamentContract} from "@/app/hooks/useTournamentContract";
 
 const uri: string = process.env.MONGODB_URI as string;
 const options: object = {};

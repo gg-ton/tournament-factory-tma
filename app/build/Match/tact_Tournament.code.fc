@@ -1,0 +1,321 @@
+#pragma version =0.4.4;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "tact_Tournament.headers.fc";
+#include "tact_Tournament.stdlib.fc";
+#include "tact_Tournament.constants.fc";
+#include "tact_Tournament.storage.fc";
+
+;;
+;; Contract Tournament functions
+;;
+
+(slice, int, int, slice, cell, int, int, cell, int, int, int) $Tournament$_contract_init(int $seqno) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = (null(), null(), null(), __gen_slice_address_58e2d2fc9446d00e70b3ad3ea1eb88797c323bae517f2527f807f62d09a56fdc(), null(), null(), null(), null(), null(), null(), null());
+    $self'seqno = $seqno;
+    $self'owner = __tact_context_get_sender();
+    $self'prizePool = 0;
+    $self'participantCount = 0;
+    $self'maxParticipantCount = 0;
+    $self'sponsorFundsAmount = 0;
+    $self'sponsorFunds = null();
+    $self'participants = null();
+    $self'isFinished = false;
+    $self'isStarted = false;
+    return ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted);
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), int) $Tournament$_fun_seqno((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), $self'seqno);
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), int) $Tournament$_fun_prizePool((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), $self'prizePool);
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), cell) $Tournament$_fun_participants((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), $self'participants);
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), int) $Tournament$_fun_participantCount((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), $self'participantCount);
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), int) $Tournament$_fun_maxParticipantCount((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), $self'maxParticipantCount);
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), ()) $Tournament$_fun_requireOwner((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    throw_unless(132, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), ());
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), cell) $Tournament$_fun_sponsorFunds((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)~$Tournament$_fun_requireOwner();
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), $self'sponsorFunds);
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), int) $Tournament$_fun_sponsorFundsAmount((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)~$Tournament$_fun_requireOwner();
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), $self'sponsorFundsAmount);
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), int) $Tournament$_fun_isFinished((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), $self'isFinished);
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), int) $Tournament$_fun_isStarted((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), $self'isStarted);
+}
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), slice) $Tournament$_fun_owner((slice, int, int, slice, cell, int, int, cell, int, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)) = $self;
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), $self'owner);
+}
+
+;;
+;; Receivers of a Contract Tournament
+;;
+
+(((slice, int, int, slice, cell, int, int, cell, int, int, int)), ()) $Tournament$_internal_binary_CreateTournamentRequest((slice, int, int, slice, cell, int, int, cell, int, int, int) $self, (int, int) $msg) impure inline {
+    var ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted) = $self;
+    var ($msg'prizePool, $msg'maxParticipantCount) = $msg;
+    ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)~$Tournament$_fun_requireOwner();
+    int $prizePoolAfterCommission = (($msg'prizePool - 10000000) - 10000000);
+    $global_send($SendParameters$_constructor_to_value($self'prizePoolAddress, $prizePoolAfterCommission));
+    $self'prizePool = $prizePoolAfterCommission;
+    $self'maxParticipantCount = $msg'maxParticipantCount;
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), ());
+}
+
+(((slice, int, int, slice, cell, int, int, cell, int, int, int)), ()) $Tournament$_internal_binary_JoinTournamentRequest((slice, int, int, slice, cell, int, int, cell, int, int, int) $self, tuple $msg) impure inline {
+    var ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted) = $self;
+    var $msg = $msg;
+    try {
+        throw_unless(55838, (($self'participantCount + 1) <= $self'maxParticipantCount));
+    } catch (_, $e) {
+        throw(34);
+    }
+    var ($init'code, $init'data) = $Player$_init_child(__tact_context_sys, __tact_context_get_sender());
+    int $isParticipantActive = __tact_dict_get_slice_int($self'participants, 267, $global_contractAddress(($init'code, $init'data)), 1);
+    if (( (null?($isParticipantActive)) ? (true) : (__tact_int_eq_nullable_one($isParticipantActive, false)) )) {
+        $self'participants~__tact_dict_set_slice_int(267, $global_contractAddress(($init'code, $init'data)), true, 1);
+        $self'participantCount = $self'participantCount + 1;
+    }
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), ());
+}
+
+(((slice, int, int, slice, cell, int, int, cell, int, int, int)), ()) $Tournament$_internal_binary_StartTournamentRequest((slice, int, int, slice, cell, int, int, cell, int, int, int) $self, tuple $msg) impure inline {
+    var ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted) = $self;
+    var $msg = $msg;
+    ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)~$Tournament$_fun_requireOwner();
+    try {
+        throw_unless(1876, ($self'participantCount > 0));
+        throw_unless(63697, ($self'isFinished == false));
+        throw_unless(39445, ($self'isStarted == false));
+    } catch (_, $e) {
+        throw(34);
+    }
+    $self'isStarted = true;
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), ());
+}
+
+(((slice, int, int, slice, cell, int, int, cell, int, int, int)), ()) $Tournament$_internal_binary_FinishTournamentRequest((slice, int, int, slice, cell, int, int, cell, int, int, int) $self, (slice) $msg) impure inline {
+    var ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted) = $self;
+    var ($msg'winner) = $msg;
+    ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)~$Tournament$_fun_requireOwner();
+    var ($init'code, $init'data) = $Player$_init_child(__tact_context_sys, $msg'winner);
+    int $isParticipantActive = __tact_dict_get_slice_int($self'participants, 267, $global_contractAddress(($init'code, $init'data)), 1);
+    try {
+        throw_unless(37305, (~ null?($isParticipantActive)));
+        throw_unless(41585, __tact_int_eq_nullable_one($isParticipantActive, true));
+    } catch (_, $e) {
+        __tact_debug_str(__tact_int_to_string($e), "[DEBUG] File contracts/tournament.tact:110:13");
+        throw(34);
+    }
+    $global_send($SendParameters$_constructor_to_body_value_code_data($global_contractAddress(($init'code, $init'data)), $VictoryRequest$_store_cell($VictoryRequest$_constructor_player($msg'winner)), 100000000, $init'code, $init'data));
+    int $winnerPrize = ($self'sponsorFundsAmount + $self'prizePool);
+    $global_send($SendParameters$_constructor_to_value($msg'winner, $winnerPrize));
+    $self'isFinished = true;
+    $self'participants = null();
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), ());
+}
+
+(((slice, int, int, slice, cell, int, int, cell, int, int, int)), ()) $Tournament$_internal_binary_Deploy((slice, int, int, slice, cell, int, int, cell, int, int, int) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted) = $self;
+    var ($deploy'queryId) = $deploy;
+    ($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted)~$Tournament$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner, $self'seqno, $self'prizePool, $self'prizePoolAddress, $self'participants, $self'participantCount, $self'maxParticipantCount, $self'sponsorFunds, $self'sponsorFundsAmount, $self'isFinished, $self'isStarted), ());
+}
+
+;;
+;; Get methods of a Contract Tournament
+;;
+
+_ %seqno() method_id(85143) {
+    var self = $Tournament$_contract_load();
+    var res = self~$Tournament$_fun_seqno();
+    return res;
+}
+
+_ %prizePool() method_id(98797) {
+    var self = $Tournament$_contract_load();
+    var res = self~$Tournament$_fun_prizePool();
+    return res;
+}
+
+_ %participants() method_id(70745) {
+    var self = $Tournament$_contract_load();
+    var res = self~$Tournament$_fun_participants();
+    return res;
+}
+
+_ %participantCount() method_id(111893) {
+    var self = $Tournament$_contract_load();
+    var res = self~$Tournament$_fun_participantCount();
+    return res;
+}
+
+_ %maxParticipantCount() method_id(96151) {
+    var self = $Tournament$_contract_load();
+    var res = self~$Tournament$_fun_maxParticipantCount();
+    return res;
+}
+
+_ %sponsorFunds() method_id(67762) {
+    var self = $Tournament$_contract_load();
+    var res = self~$Tournament$_fun_sponsorFunds();
+    return res;
+}
+
+_ %sponsorFundsAmount() method_id(120859) {
+    var self = $Tournament$_contract_load();
+    var res = self~$Tournament$_fun_sponsorFundsAmount();
+    return res;
+}
+
+_ %isFinished() method_id(89038) {
+    var self = $Tournament$_contract_load();
+    var res = self~$Tournament$_fun_isFinished();
+    return res;
+}
+
+_ %isStarted() method_id(127757) {
+    var self = $Tournament$_contract_load();
+    var res = self~$Tournament$_fun_isStarted();
+    return res;
+}
+
+_ %owner() method_id(83229) {
+    var self = $Tournament$_contract_load();
+    var res = self~$Tournament$_fun_owner();
+    return res;
+}
+
+_ supported_interfaces() method_id {
+    return (
+        "org.ton.introspection.v0"H >> 128,
+        "org.ton.abi.ipfs.v0"H >> 128,
+        "org.ton.deploy.lazy.v0"H >> 128,
+        "org.ton.debug.v0"H >> 128,
+        "org.ton.chain.workchain.v0"H >> 128,
+        "org.ton.ownable"H >> 128
+    );
+}
+
+_ get_abi_ipfs() method_id {
+    return "ipfs://QmdgR3mGpwfD6myUjBRNFit32p2pXYzddw3pZif1VCGKDt";
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract Tournament
+;;
+
+((slice, int, int, slice, cell, int, int, cell, int, int, int), int) $Tournament$_contract_router_internal((slice, int, int, slice, cell, int, int, cell, int, int, int) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive CreateTournamentRequest message
+    if (op == 1716319573) {
+        var msg = in_msg~$CreateTournamentRequest$_load();
+        self~$Tournament$_internal_binary_CreateTournamentRequest(msg);
+        return (self, true);
+    }
+    
+    ;; Receive JoinTournamentRequest message
+    if (op == 3746790198) {
+        var msg = in_msg~$JoinTournamentRequest$_load();
+        self~$Tournament$_internal_binary_JoinTournamentRequest(msg);
+        return (self, true);
+    }
+    
+    ;; Receive StartTournamentRequest message
+    if (op == 3527733694) {
+        var msg = in_msg~$StartTournamentRequest$_load();
+        self~$Tournament$_internal_binary_StartTournamentRequest(msg);
+        return (self, true);
+    }
+    
+    ;; Receive FinishTournamentRequest message
+    if (op == 2132003049) {
+        var msg = in_msg~$FinishTournamentRequest$_load();
+        self~$Tournament$_internal_binary_FinishTournamentRequest(msg);
+        return (self, true);
+    }
+    
+    ;; Receive Deploy message
+    if (op == 2490013878) {
+        var msg = in_msg~$Deploy$_load();
+        self~$Tournament$_internal_binary_Deploy(msg);
+        return (self, true);
+    }
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $Tournament$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$Tournament$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $Tournament$_contract_store(self);
+}
