@@ -62,7 +62,7 @@ export function useTeamContract(request: createTeamRequest) {
         deploy()
             .then(addPlayers)
             .catch((err) => console.log(err))
-    }, [teamContract]);
+    }, [addPlayers, deploy, teamContract]);
 
     return {
         totalParticipants,
@@ -97,7 +97,7 @@ export function usePlayerContract(request: createPlayerRequest) {
 
     useEffect(() => {
         deploy().catch((err) => console.log(err))
-    }, [playerContract]);
+    }, [deploy, playerContract]);
 
     return {
         address: playerContract?.address.toString(),
@@ -113,7 +113,7 @@ export type createTournamentRequest = {
 
 export function useTournamentContract(request: createTournamentRequest) {
     const client = useTonClient();
-    const { sender } = useTonConnect();
+    const { wallet, sender } = useTonConnect();
     const [totalParticipants, setTotalParticipants] = useState<null | number>(null)
     const [totalPrizePool, setTotalPrizePool] = useState<null | number>(null)
 
@@ -174,7 +174,7 @@ export function useTournamentContract(request: createTournamentRequest) {
             .then(create)
             .then(join)
             .catch((err) => console.log(err))
-    }, [tournamentContract]);
+    }, [create, deploy, join, tournamentContract]);
 
     return {
         totalParticipants,

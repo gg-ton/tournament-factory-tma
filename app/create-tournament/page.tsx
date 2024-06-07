@@ -13,7 +13,7 @@ interface FormValues {
   gameName: string;
   tournamentType: 'Public' | 'Private';
   tournamentFormat: '1 vs 1' | 'Single Elimination' | 'Double Elimination';
-  pricePool: number;
+  prizePool: number;
   currency: 'TON' | 'NOT';
 }
 
@@ -35,10 +35,10 @@ const CreateTournament = () => {
     'Public'
   );
 
-  const pricePool = parseFloat(watch('pricePool') as any) || 0;
+  const prizePool = parseFloat(watch('prizePool') as any) || 0;
   const currency = watch('currency') || 'TON';
-  const commission = pricePool * 0.1;
-  const total = pricePool + commission;
+  const commission = prizePool * 0.1;
+  const total = prizePool + commission;
 
   const onSubmit = (data: FormValues) => {
     router.push(`/register-team`);
@@ -127,22 +127,22 @@ const CreateTournament = () => {
           </div>
 
           <div className={styles.field}>
-            <label className={styles.label}>Price pool</label>
-            <div className={styles.pricePoolContainer}>
+            <label className={styles.label}>Prize pool</label>
+            <div className={styles.prizePoolContainer}>
               <Controller
-                name="pricePool"
+                name="prizePool"
                 control={control}
                 rules={{
-                  required: 'Price pool is required',
+                  required: 'Prize pool is required',
                   min: {
                     value: 0.01,
-                    message: 'Price pool must be greater than 0',
+                    message: 'Prize pool must be greater than 0',
                   },
                 }}
                 render={({ field }) => (
                   <Input
                     type="number"
-                    className={`${styles.input} ${styles.pricePoolInput}`}
+                    className={`${styles.input} ${styles.prizePoolInput}`}
                     {...field}
                   />
                 )}
@@ -182,8 +182,8 @@ const CreateTournament = () => {
                 )}
               />
             </div>
-            {errors.pricePool && (
-              <p className={styles.error}>{errors.pricePool.message}</p>
+            {errors.prizePool && (
+              <p className={styles.error}>{errors.prizePool.message}</p>
             )}
           </div>
 
@@ -191,13 +191,13 @@ const CreateTournament = () => {
 
           <div className={styles.summary}>
             <div className={styles.summaryItem}>
-              PRICE POOL: {pricePool.toFixed(2)} {currency}
+              Prize pool: {prizePool.toFixed(2)} {currency}
             </div>
             <div className={styles.summaryItem}>
-              COMMISSION: {commission.toFixed(2)} {currency}
+              Commission: {commission.toFixed(2)} {currency}
             </div>
             <div className={styles.summaryItem}>
-              TOTAL: {total.toFixed(2)} {currency}
+              Total: {total.toFixed(2)} {currency}
             </div>
           </div>
         </form>
